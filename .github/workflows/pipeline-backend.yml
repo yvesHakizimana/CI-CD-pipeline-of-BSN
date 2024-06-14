@@ -50,6 +50,7 @@ jobs:
         run: |
           cd book-network
           ./mvnw clean test
+
   build:
     runs-on: ubuntu-latest
     name: Build Backend

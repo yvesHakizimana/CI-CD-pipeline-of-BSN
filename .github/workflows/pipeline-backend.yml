@@ -79,6 +79,20 @@ jobs:
     runs-on: ubuntu-latest
     name: Build Backend
     needs: [compile, unit-tests]
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: username
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: book_social_network
+        ports:
+          - 5434:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     env:
       EMAIL_HOSTNAME: ${{ secrets.EMAIL_HOSTNAME }}
       EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}

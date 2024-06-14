@@ -182,7 +182,7 @@ jobs:
     needs: [build-image]
     steps:
       - name: Create Deployment Folder
-        run: ssh ${{ secrets.SERVER_USERNAME }}@${{secrets.SERVER_IP}} "mkdir -p ci-cd"
+        run: ssh -p 22 ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }} "mkdir -p ci-cd"
 
       - name: Copy docker-compose file
         run: scp docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{secrets.SERVER_IP}}:ci-cd/docker-compose.yml

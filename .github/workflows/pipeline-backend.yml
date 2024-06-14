@@ -50,6 +50,12 @@ jobs:
           java-version: 17
           distribution: 'corretto'
 
+      - name: Set up environment variables
+        run: |
+            echo "EMAIL_HOSTNAME=$EMAIL_HOSTNAME" >> $GITHUB_ENV
+            echo "EMAIL_USERNAME=$EMAIL_USERNAME" >> $GITHUB_ENV
+            echo "EMAIL_PASSWORD=$EMAIL_PASSWORD" >> $GITHUB_ENV
+
       - name: Running unit Tests
         run: |
           cd book-network

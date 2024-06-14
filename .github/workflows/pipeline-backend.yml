@@ -79,6 +79,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Build Backend
     needs: [compile, unit-tests]
+    env:
+      EMAIL_HOSTNAME: ${{ secrets.EMAIL_HOSTNAME }}
+      EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

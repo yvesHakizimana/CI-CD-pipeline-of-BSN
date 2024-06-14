@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  postgres:
+    container_name: postgres-sql-sbn
+    image: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: book-social-network
+    volumes:
+      - postgres:/data/postgres
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5434:5432"
+    networks:
+      - spring-demo
+    restart: unless-stopped
+  mail-dev:
+    container_name: mail-dev-bsn
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - spring-demo
+  bsn-ui:
+    container_name: bsn-ui
+    image: bsn/fronted:1.0.6
+    ports:
+      - "8080:80"
+    networks:
+      - spring-demo
+    depends_on:
+      - bsn-api
+  bsn-api:
+    container_name: bsn-api
+    image: bsn/backend:1.0.11
+    ports:
+      - "8090:8090"
+    networks:
+      - spring-demo
+    depends_on:
+      - postgres
+
+
+networks:
+  spring-demo:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
